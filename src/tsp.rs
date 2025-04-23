@@ -44,14 +44,15 @@ impl TSP {
     }
 
     pub fn evaluate(&self, path: &TSPPath) -> f64 {
-        let mut iter = path.cities.iter().cycle().enumerate().peekable();
+        let mut iter = path.cities.iter().cycle().peekable();
         let mut tsp_value = 0.0;
         loop {
-            let (_, current_city) = iter.next().unwrap();
-            let (next_index, next_city) = iter.peek().unwrap();
+            let current_city = iter.next().unwrap();
+            let next_city = iter.peek().unwrap();
 
             tsp_value += current_city.distance(&next_city);
-            if *next_index == 0 {
+
+            if *next_city == path.cities.first().unwrap() {
                 break;
             }
         }
@@ -75,7 +76,6 @@ impl TSPPath {
         for _ in 0..cities.len() {    
             loop {
                 let random_index = rng.random_range(0..cities.len());
-
 
                 if let Ok(_) = tspPath.insert(cities.get(random_index).unwrap().clone()) {
                     break;

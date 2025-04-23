@@ -8,17 +8,23 @@ use crate::tsp::{TSPPath, TSP};
 
 fn generate_neighbor(tsp_path: &TSPPath) -> TSPPath {
     let mut rng = rand::rng();
+    
+    let mut tsp_path = tsp_path.clone();
 
-    let (index_a, index_b) = loop {
-        let index_a = rng.random_range(0..tsp_path.cities.len());
-        let index_b = rng.random_range(0..tsp_path.cities.len());
+    for _ in 0..(tsp_path.cities.len() as f32 *0.01).ceil() as i32 {
+      let (index_a, index_b) = loop {
+          let index_a = rng.random_range(0..tsp_path.cities.len());
+          let index_b = rng.random_range(0..tsp_path.cities.len());
+  
+          if index_a != index_b {
+              break (index_a, index_b);
+          }
+      };
 
-        if index_a != index_b {
-            break (index_a, index_b);
-        }
-    };
+      tsp_path = tsp_path.swap(index_a, index_b);
+    }
 
-    tsp_path.swap(index_a, index_b)
+    tsp_path
 }
 
 pub fn run(tsp: &TSP, sa_max: usize, starting_temp: f32, vector: TSPPath, index: usize) -> TSPPath {
@@ -37,7 +43,7 @@ pub fn run(tsp: &TSP, sa_max: usize, starting_temp: f32, vector: TSPPath, index:
 
     log_data.push(format!("{},{}", generation, best_result));
 
-    let max_generation = 5;
+    let max_generation = 30000;
 
     while generation < max_generation {
 

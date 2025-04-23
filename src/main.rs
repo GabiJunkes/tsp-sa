@@ -15,7 +15,7 @@ use tsp::{TSPPath, TSP};
 // multiplas execucoes: 30 vzs (boxplot)
 
 fn main() {
-    let sa_max = 1;
+    let sa_max = 10;
     let starting_temp = 10000.0;
     let iterations = 30;
 
