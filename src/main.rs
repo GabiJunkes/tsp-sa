@@ -24,6 +24,9 @@ fn main() {
         "cnfs/kroA100-tsp.cnf",
     ];
 
+    // 426
+    // 21282
+
 
     for (index, file_path) in files.iter().enumerate() {
         println!("Running {}/{}", index+1, files.len());
