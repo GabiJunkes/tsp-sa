@@ -43,7 +43,7 @@ pub fn run(tsp: &TSP, sa_max: usize, starting_temp: f32, vector: TSPPath, index:
 
     log_data.push(format!("{},{}", generation, best_result));
 
-    let max_generation = 30000;
+    let max_generation = 5000;
 
     while generation < max_generation {
 
@@ -76,12 +76,14 @@ pub fn run(tsp: &TSP, sa_max: usize, starting_temp: f32, vector: TSPPath, index:
         // log_data.push(format!("{},{},{}", generation, best_result, temp));
 
         temp = temp * 0.995;
+        // temp = starting_temp / (1.0 + (generation as f32).ln());
+        // temp = starting_temp * (1.0 - (generation as f32 / max_generation as f32));
         
         iter = 0;
         generation +=1;
     }
 
-    let mut file = File::create(format!("data/convergence_data_{}_{}_5.csv", tsp.cities.len(), index)).expect("Failed to create file");
+    let mut file = File::create(format!("data/convergence_data_{}_{}.csv", tsp.cities.len(), index)).expect("Failed to create file");
     file.write_all(b"Generation,False Clauses,Temperature\n").unwrap();
     for line in log_data {
         file.write_all(line.as_bytes()).unwrap();
@@ -117,7 +119,7 @@ pub fn run_multiple_threads(tsp: Arc<TSP>, sa_max: usize, starting_temp: f32, it
         handle.join().unwrap();
     }
 
-    let mut file = File::create(format!("data/boxplot_data_{}_10.csv", tsp.cities.len())).expect("Failed to create file");
+    let mut file = File::create(format!("data/boxplot_data_{}_1.csv", tsp.cities.len())).expect("Failed to create file");
     file.write_all(b"Run,False Clauses\n").unwrap();
 
     let results = results.lock().unwrap();
