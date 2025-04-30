@@ -20,7 +20,6 @@ fn generate_neighbor(tsp_path: &TSPPath) -> TSPPath {
               break (index_a, index_b);
           }
       };
-
       tsp_path = tsp_path.swap(index_a, index_b);
     }
 
@@ -43,7 +42,7 @@ pub fn run(tsp: &TSP, sa_max: usize, starting_temp: f32, vector: TSPPath, index:
 
     log_data.push(format!("{},{}", generation, best_result));
 
-    let max_generation = 5000;
+    let max_generation = 15000;
 
     while generation < max_generation {
 
@@ -75,7 +74,7 @@ pub fn run(tsp: &TSP, sa_max: usize, starting_temp: f32, vector: TSPPath, index:
 
         // log_data.push(format!("{},{},{}", generation, best_result, temp));
 
-        temp = temp * 0.995;
+        temp = temp * 0.999;
         // temp = starting_temp / (1.0 + (generation as f32).ln());
         // temp = starting_temp * (1.0 - (generation as f32 / max_generation as f32));
         
@@ -119,7 +118,7 @@ pub fn run_multiple_threads(tsp: Arc<TSP>, sa_max: usize, starting_temp: f32, it
         handle.join().unwrap();
     }
 
-    let mut file = File::create(format!("data/boxplot_data_{}_1.csv", tsp.cities.len())).expect("Failed to create file");
+    let mut file = File::create(format!("data/boxplot_data_{}_10.csv", tsp.cities.len())).expect("Failed to create file");
     file.write_all(b"Run,False Clauses\n").unwrap();
 
     let results = results.lock().unwrap();

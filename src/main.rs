@@ -15,8 +15,8 @@ use tsp::{TSPPath, TSP};
 // multiplas execucoes: 30 vzs (boxplot)
 
 fn main() {
-    let sa_max = 1;
-    let starting_temp = 20000.0;
+    let sa_max = 20;
+    let starting_temp = 30000.0;
     let iterations = 30;
 
     let files = [
@@ -31,7 +31,7 @@ fn main() {
     for (index, file_path) in files.iter().enumerate() {
         println!("Running {}/{}", index+1, files.len());
         let tsp = TSP::new(file_path);
-        if true {
+        if false {
             let tsp_path = TSPPath::new(&tsp.cities);
     
             let result_vector = run(&tsp, sa_max, starting_temp, tsp_path, 1);

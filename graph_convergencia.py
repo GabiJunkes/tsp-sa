@@ -6,7 +6,7 @@ for file_path in file_paths:
 
   fig, ax1 = plt.subplots(figsize=(10, 5))
 
-  ax1.plot(data["Generation"], data["False Clauses"], marker=",", linestyle="-", color="b", label="Caminho mínimo")
+  ax1.plot(data["Generation"][::100], data["False Clauses"][::100], marker=",", linestyle="-", color="b", label="Caminho mínimo")
   ax1.set_xlabel("Geração")
   ax1.set_ylabel("Caminho mínimo", color="b")
   ax1.tick_params(axis="y", labelcolor="b")
